@@ -1,0 +1,144 @@
+parameters:
+- name: appDeploymentTarget
+  type: string
+
+- name: key
+  type: string
+
+- name: apiAppServiceNames
+  type: string
+  default: ''
+
+- name: apiArchivePattern
+  type: string
+  default: ''
+
+- name: apiExtractFolder
+  type: string
+  default: ''
+
+- name: apiPackageId
+  type: string
+  default: ''
+
+- name: apiPacakgeVersion
+  type: string
+  default: ''
+
+- name: apiImage
+  type: string
+  default: ''
+
+- name: apiAKSApps
+  type: string
+  default: ''
+
+- name: apiAKSAppsForBlueGreen
+  type: string
+  default: ''
+
+- name: apiWorkloadName
+  type: string
+  default: ''
+
+- name: apimInstanceNames
+  type: string
+  default: ''
+
+- name: apiSpecificationArchivePattern
+  type: string
+  default: ''
+
+- name: apiSpecificationExtractFolder
+  type: string
+  default: ''
+
+- name: apiSpecificationAPIId
+  type: string
+  default: ''
+
+- name: apiPath
+  type: string
+  default: ''
+
+- name: apiSpecificationName
+  type: string
+  default: ''
+
+- name: apiSpecificationDescription
+  type: string
+  default: ''
+
+- name: apiSpecificationPackageId
+  type: string
+  default: ''
+
+- name: apiSpecificationPacakgeVersion
+  type: string
+  default: ''
+
+- name: enableApiAndApiManagementVariables
+  type: boolean
+  default: true
+
+
+steps:
+- ${{ if and(eq(parameters.appDeploymentTarget, 'AppService'), eq(parameters.key, 'Api-AppServiceMatrix')) }}:
+  - pwsh: |
+      "##vso[task.setvariable variable=Api.appServiceNames]${{ parameters.apiAppServiceNames }}"
+    name: SetAppServiceList
+    displayName: Set App Service List
+
+- ${{ if and(eq(parameters.appDeploymentTarget, 'AppService'), eq(parameters.key, 'Api')) }}:
+  - pwsh: |
+      "##vso[task.setvariable variable=Api.archivePattern]${{ parameters.apiArchivePattern }}"
+      "##vso[task.setvariable variable=Api.extractFolder]${{ parameters.apiExtractFolder }}"
+      "##vso[task.setvariable variable=Api.packageId]${{ parameters.apiPackageId }}"
+      "##vso[task.setvariable variable=Api.pacakgeVersion]${{ parameters.apiPacakgeVersion }}"
+    name: SetAppServiceDeploymentVariables
+    displayName: Set App Service Deployment Variables
+
+- ${{ if and(eq(parameters.appDeploymentTarget, 'AKS'), eq(parameters.key, 'Api-ImportImage')) }}:
+  - pwsh: |
+      "##vso[task.setvariable variable=Api.targetContainerRegistry]$(environment.containerRegistry)"
+      "##vso[task.setvariable variable=Api.sourceImage]$(environment.sourceContainerRegistry).azurecr.io/${{ parameters.apiImage }}"
+      "##vso[task.setvariable variable=Api.targetImage]${{ parameters.apiImage }}"
+      "##vso[task.setvariable variable=Api.sourceContainerRegistry.SPUserName]$(environment.sourceContainerRegistry.servicePrincipalApplicationId)"
+      "##vso[task.setvariable variable=Api.sourceContainerRegistry.SPPassword]$(environment.sourceContainerRegistry.servicePrincipalClientAuth)"
+    name: SetImportImageVariables
+    displayName: Set Import Image Variables
+
+- ${{ if and(eq(parameters.appDeploymentTarget, 'AKS'), eq(parameters.key, 'Api-DeploymentMatrix')) }}:
+  - pwsh: |
+      "##vso[task.setvariable variable=Api.aksApps]${{ parameters.apiAKSApps }}"
+      "##vso[task.setvariable variable=Api.aksAppsForBlueGreen]${{ parameters.apiAKSAppsForBlueGreen }}"
+      "##vso[task.setvariable variable=Api.workloadName]${{ parameters.apiWorkloadName }}"
+    name: SetAKSAppDeploymentList
+    displayName: Set AKS App Deployment List
+
+- ${{ if and(eq(parameters.appDeploymentTarget, 'AKS'), eq(parameters.key, 'Api')) }}:
+  - pwsh: |
+      "##vso[task.setvariable variable=Api.containerRegistry]$(environment.containerRegistry).azurecr.io"
+      "##vso[task.setvariable variable=Api.image]$(environment.containerRegistry).azurecr.io/${{ parameters.apiImage }}"
+      "##vso[task.setvariable variable=Api.workloadName]${{ parameters.apiWorkloadName }}"
+    name: SetAKSDeploymentVariables
+    displayName: Set AKS Deployment Variables
+
+- ${{ if eq(parameters.key, 'APIManagementMatrix') }}:
+  - pwsh: |
+      "##vso[task.setvariable variable=APIM.instanceNames]${{ parameters.apimInstanceNames }}"
+    name: SetAPIManagementList
+    displayName: Set API Management List
+
+- ${{ if eq(parameters.key, 'APIM') }}:
+  - pwsh: |
+      "##vso[task.setvariable variable=APIM.archivePattern]${{ parameters.apiSpecificationArchivePattern }}"
+      "##vso[task.setvariable variable=APIM.extractFolder]${{ parameters.apiSpecificationExtractFolder }}"
+      "##vso[task.setvariable variable=APIM.apiId]${{ parameters.apiSpecificationAPIId }}"
+      "##vso[task.setvariable variable=APIM.apiPath]${{ parameters.apiPath }}"
+      "##vso[task.setvariable variable=APIM.name]${{ parameters.apiSpecificationName }}"
+      "##vso[task.setvariable variable=APIM.description]${{ parameters.apiSpecificationDescription }}"
+      "##vso[task.setvariable variable=APIM.packageId]${{ parameters.apiSpecificationPackageId }}"
+      "##vso[task.setvariable variable=APIM.pacakgeVersion]${{ parameters.apiSpecificationPacakgeVersion }}"
+    name: SetAPIMDeploymentVariables
+    displayName: Set APIM Deployment Variables
