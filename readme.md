@@ -52,8 +52,32 @@ You can directly call a particular template as per the requirement. for example:
 
 
   steps:
+  # passing the parameters
+  - template: templates/SetApiAndApiManagementVariables.yml
+        parameters:
+          appDeploymentTarget: ${{parameters.appDeploymentTarget}}
+          key: ${{parameters.key}}
+          apiAKSApps: ${{ parameters.apiAKSApps}}
+          apiAKSAppsForBlueGreen: ${{ parameters.apiAKSAppsForBlueGreen}}
+          apiWorkloadName: ${{ parameters.apiWorkloadName}}
+          apiAppServiceNames: ${{ parameters.apiAppServiceNames}}
+          apiArchivePattern: ${{ parameters.apiArchivePattern}}
+          apiExtractFolder: ${{ parameters.apiExtractFolder}}
+          apiPackageId: ${{ parameters.apiPackageId}}
+          apiPacakgeVersion: ${{ parameters.apiPacakgeVersion}}
+          apiImage: ${{ parameters.apiImage}}
+          apimInstanceNames: ${{ parameters.apimInstanceNames}}
+          apiPath: ${{ parameters.apiPath}}
+          apiSpecificationAPIId: ${{ parameters.apiSpecificationAPIId}}
+          apiSpecificationArchivePattern: ${{ parameters.apiSpecificationArchivePattern}}
+          apiSpecificationExtractFolder: ${{ parameters.apiSpecificationExtractFolder}}
+          apiSpecificationName: ${{ parameters.pipelineName}}
+          apiSpecificationDescription: ${{ parameters.apiSpecificationDescription}}
+          apiSpecificationPackageId: ${{ parameters.apiSpecificationPackageId}}
+          apiSpecificationPacakgeVersion: ${{ parameters.apiSpecificationPacakgeVersion}}
 
-  - template: templates/apiAndApiManagementVariables.yml@Template
+  # passing the variables as parameters
+  - template: templates/SetApiAndApiManagementVariables.yml@Template
       parameters:
         appDeploymentTarget: ${{parameters.appDeploymentTarget}}
         key: ${{parameters.key}}
