@@ -53,7 +53,7 @@ You can directly call a particular template as per the requirement. for example:
 
   steps:
   # passing the parameters
-  - template: templates/SetApiAndApiManagementVariables.yml
+  - template: templates/setApiAndApiManagementVariables.yml
         parameters:
           appDeploymentTarget: ${{parameters.appDeploymentTarget}}
           key: ${{parameters.key}}
@@ -77,7 +77,7 @@ You can directly call a particular template as per the requirement. for example:
           apiSpecificationPacakgeVersion: ${{ parameters.apiSpecificationPacakgeVersion}}
 
   # passing the variables as parameters
-  - template: templates/SetApiAndApiManagementVariables.yml@Template
+  - template: templates/setApiAndApiManagementVariables.yml@Template
       parameters:
         appDeploymentTarget: ${{parameters.appDeploymentTarget}}
         key: ${{parameters.key}}
