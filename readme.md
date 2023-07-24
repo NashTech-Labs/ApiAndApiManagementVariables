@@ -37,7 +37,7 @@ These parameters provide multiple use case options for the setvariables template
 
 ### Direct use of a template
 
-You can directly call a particular template as per the requirement. for example: to use setup and init only.
+You can directly call a particular template as per the requirement. for example: 
 
   ```yaml
   # azure-pipeline.yml
