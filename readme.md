@@ -1,4 +1,4 @@
-# ApiAndApiManagementVariables.setVariables
+# ApiAndApiManagementVariables.
 
 ## Pipeline Requirements
 
