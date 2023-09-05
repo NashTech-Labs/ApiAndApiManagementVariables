@@ -76,29 +76,6 @@ You can directly call a particular template as per the requirement. for example:
           apiSpecificationPackageId: ${{ parameters.apiSpecificationPackageId}}
           apiSpecificationPacakgeVersion: ${{ parameters.apiSpecificationPacakgeVersion}}
 
-  # passing the variables as parameters
-  - template: templates/setApiAndApiManagementVariables.yml@Template
-      parameters:
-        appDeploymentTarget: ${{parameters.appDeploymentTarget}}
-        key: ${{parameters.key}}
-        apiAKSApps: refdata-$(platform.refdata.blueGreenEnv)
-        apiAKSAppsForBlueGreen: refdata-{deploymentSlot}
-        apiWorkloadName: refdata
-        apiAppServiceNames: $(platform.refdata.webAppName)
-        apiArchivePattern: refdata-website.$(build.configVersion).*
-        apiExtractFolder: $(build.configVersion)/refdata-website
-        apiPackageId: refdata-website
-        apiPacakgeVersion: $(build.configVersion)
-        apiImage: refdata:v$(build.configVersion)
-        apimInstanceNames: $(environment.apiManagement.serviceNames)
-        apiPath: refdata
-        apiSpecificationAPIId: $(platform.refdata.apiManagement.name)
-        apiSpecificationArchivePattern: refdata-apispecification.$(build.configVersion).*
-        apiSpecificationExtractFolder: $(build.configVersion)/refdata-apispecification
-        apiSpecificationName: 'RefData API'
-        apiSpecificationDescription: 'API for RefData operations.'
-        apiSpecificationPackageId: refdata-apispecification
-        apiSpecificationPacakgeVersion: $(build.configVersion)
         
   
 Make sure to adjust the repository name, branch name, and parameter values according to your project's requirements.
